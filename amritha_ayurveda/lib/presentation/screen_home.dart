@@ -111,10 +111,10 @@ class ScreenHome extends StatelessWidget {
                   height: 50,
                   width: deviceWidth - 30,
                   callbackAction: () async {
-                    await registerProvider.registerNow(signInProvider);
                     Navigator.of(context).push(CupertinoPageRoute(
                       builder: (context) => const ScreenRegister(),
                     ));
+                    await registerProvider.registerNow(signInProvider);
                   },
                   label: "Register Now "),
               kHieght20

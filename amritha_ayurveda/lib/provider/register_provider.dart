@@ -16,6 +16,10 @@ class RegisterProvider extends ChangeNotifier {
   String? selectedLocation;
 
   String? selectedbranch;
+  String? selectedTreatment;
+
+  int _treatments = 0;
+  int get treatments => _treatments;
 
   List<String> _branchList = [];
   List<String> get branchList => _branchList;
@@ -33,6 +37,33 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<int> counters = List<int>.filled(3, 0);
+
+  List _treatmentPurchased = [];
+  List get treatmentPurchased => _treatmentPurchased;
+
+  int getCount(int index) {
+    return counters[index];
+  }
+
+  void decrementCounter(int index) {
+    if (counters[index] == 0) {
+      return;
+    }
+    counters[index]--;
+    notifyListeners();
+  }
+
+  void incrementCounter(int index) {
+    counters[index]++;
+    notifyListeners();
+  }
+
+  treatmentSelected(String treatmentValue) {
+    selectedTreatment = treatmentValue;
+    notifyListeners();
+  }
+
   registerNow(SignInProvider signInProvider) async {
     await BranchService.fetchBranches(signInProvider.token, this);
     await TreatmentService.fetchTreatments(signInProvider.token, this);
@@ -42,12 +73,52 @@ class RegisterProvider extends ChangeNotifier {
   setBranches(List<String> newList) {
     _branchList = newList;
     notifyListeners();
-    print("branches are $branchList  ");
+    print("branches are $branchList");
   }
 
   setTreatments(List<String> newList) {
     _treatmentList = newList;
     notifyListeners();
     print("treatments are $treatmentList ");
+  }
+
+  void saveTreatmentDetail() {
+    _treatments = 1;
+    if (selectedTreatment != null) {
+      _treatmentPurchased.add(selectedTreatment!);
+
+      notifyListeners();
+    }
+    notifyListeners();
+  }
+
+  void saveTreatmentDetails() {
+    _treatments = 1;
+    if (selectedTreatment != null) {
+      Map<String, dynamic> treatmentDetails = {
+        'treatment': selectedTreatment,
+        'maleQuantity': counters[0],
+        'femaleQuantity': counters[1],
+      };
+
+      _treatmentPurchased.add(treatmentDetails);
+
+      notifyListeners();
+      print("treatemnt purchased is $treatmentPurchased");
+    }
+  }
+
+  void removeTreatmentDetails(int index) {
+    if (index >= 0 && index < _treatmentPurchased.length) {
+      _treatmentPurchased.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  void modifyTreatmentDetails(int index, Map<String, dynamic> newDetails) {
+    if (index >= 0 && index < _treatmentPurchased.length) {
+      _treatmentPurchased[index] = newDetails;
+      notifyListeners();
+    }
   }
 }

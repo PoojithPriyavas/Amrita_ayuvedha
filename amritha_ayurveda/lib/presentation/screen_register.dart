@@ -2,7 +2,6 @@ import 'package:amritha_ayurveda/core/colors.dart';
 import 'package:amritha_ayurveda/core/constants.dart';
 import 'package:amritha_ayurveda/core/text.dart';
 import 'package:amritha_ayurveda/presentation/pop_up_screen.dart';
-import 'package:amritha_ayurveda/provider/login_provider.dart';
 import 'package:amritha_ayurveda/provider/register_provider.dart';
 import 'package:amritha_ayurveda/widgets/custom_elevated_button.dart';
 import 'package:amritha_ayurveda/widgets/custom_elevated_button2.dart';
@@ -18,7 +17,6 @@ class ScreenRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
-    final signInProvider = Provider.of<SignInProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -52,10 +50,10 @@ class ScreenRegister extends StatelessWidget {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Expanded(
                   child: SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 25),
@@ -256,19 +254,206 @@ class ScreenRegister extends StatelessWidget {
                             style: t16Black400,
                           ),
                           kHieght5,
-                          CustomElevatedButton(
-                              style: t17White600,
-                              height: 50,
-                              width: deviceWidth - 30,
-                              callbackAction: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return PopUpScreen();
+
+                          registerProvider.treatments == 0
+                              ? CustomElevatedButton(
+                                  style: t17White600,
+                                  height: 50,
+                                  width: deviceWidth - 30,
+                                  callbackAction: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const PopUpScreen();
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              label: "Add Treatments"),
+                                  label: "Add Treatments")
+                              : Column(
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: deviceWidth - 30,
+                                      child: ListView.builder(
+                                        itemCount: registerProvider
+                                            .treatmentPurchased.length,
+                                        itemBuilder: (context, index) {
+                                          Map<String, dynamic>
+                                              treatmentDetails =
+                                              registerProvider
+                                                  .treatmentPurchased[index];
+                                          String treatmentName =
+                                              treatmentDetails['treatment'];
+                                          int maleQuantity =
+                                              treatmentDetails['maleQuantity'];
+                                          int femaleQuantity = treatmentDetails[
+                                              'femaleQuantity'];
+                                          return Container(
+                                            height: 85,
+                                            decoration: BoxDecoration(
+                                                color: lightShadeGreyCOlor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            "  1. ",
+                                                            style: t18Black500,
+                                                          ),
+                                                          Text(
+                                                            treatmentName,
+                                                            style: t18Black500,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                          decoration: BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: Colors
+                                                                  .redAccent
+                                                                  .withOpacity(
+                                                                      0.4)),
+                                                          child: const Icon(
+                                                            Icons.close,
+                                                            color: Colors.white,
+                                                            size: 17,
+                                                          ))
+                                                    ],
+                                                  ),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 40),
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                "Men",
+                                                                style:
+                                                                    t16Primary400,
+                                                              ),
+                                                              kWidth10,
+                                                              Container(
+                                                                height: 26,
+                                                                width: 44,
+                                                                decoration: BoxDecoration(
+                                                                    color:
+                                                                        lightShadeGreyCOlor,
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                5),
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            0.5,
+                                                                        color:
+                                                                            lightGreyColor)),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    maleQuantity
+                                                                        .toString(),
+                                                                    style:
+                                                                        t16Primary400,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        kWidth20,
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              "female",
+                                                              style:
+                                                                  t16Primary400,
+                                                            ),
+                                                            kWidth10,
+                                                            Container(
+                                                              height: 26,
+                                                              width: 44,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    lightShadeGreyCOlor,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                border: Border.all(
+                                                                    width: 0.5,
+                                                                    color:
+                                                                        lightGreyColor),
+                                                              ),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  femaleQuantity
+                                                                      .toString(),
+                                                                  style:
+                                                                      t16Primary400,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 10),
+                                                      child: Icon(
+                                                          Icons
+                                                              .mode_edit_outlined,
+                                                          color: primaryColor),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    kHieght20,
+                                    CustomElevatedButton(
+                                        style: t17White600,
+                                        height: 50,
+                                        width: deviceWidth - 30,
+                                        callbackAction: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return const PopUpScreen();
+                                            },
+                                          );
+                                        },
+                                        label: "Add Treatments")
+                                  ],
+                                ),
                           kHieght20,
                           Text(
                             "  Total Amount",

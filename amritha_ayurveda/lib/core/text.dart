@@ -57,6 +57,11 @@ TextStyle get t16Black400 {
       fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
 }
 
+TextStyle get t16Primary400 {
+  return GoogleFonts.poppins(
+      fontSize: 16, fontWeight: FontWeight.w400, color: primaryColor);
+}
+
 // --------inter style------
 TextStyle get t14Black300Inter {
   return GoogleFonts.inter(
@@ -67,7 +72,5 @@ TextStyle get t14Black300Inter {
 
 TextStyle get t14DBlack300Inter {
   return GoogleFonts.inter(
-      fontSize: 14,
-      fontWeight: FontWeight.w300,
-      color: Colors.black);
+      fontSize: 14, fontWeight: FontWeight.w300, color: Colors.black);
 }
