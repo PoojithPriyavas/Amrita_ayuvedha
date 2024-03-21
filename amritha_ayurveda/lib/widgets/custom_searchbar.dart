@@ -13,17 +13,19 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: deviceWidth - 130  ,
+      width: deviceWidth - 130,
       height: 40,
       child: CupertinoSearchTextField(
         placeholder: "Search for treatments",
         placeholderStyle: t12BlackLight400,
-        prefixIcon:const  Icon(Icons.search_sharp,size: 20,color: Colors.black26 ,),
+        prefixIcon: const Icon(
+          Icons.search_sharp,
+          size: 20,
+          color: Colors.black26,
+        ),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black38),
           borderRadius: BorderRadius.circular(8),
-          
-    
         ),
       ),
     );

@@ -9,6 +9,8 @@ class SignInService {
   Future<void> login(
       SignInProvider signInProvider, BuildContext context) async {
     print("button clicked");
+    print("username is ${signInProvider.email}");
+    print("password is ${signInProvider.password}");
 
     Map<String, String> body = {
       'username': signInProvider.email,
@@ -18,7 +20,7 @@ class SignInService {
     try {
       // Making the POST request
       http.Response response = await http.post(
-        Uri.parse(ApiEndPoints.commonWebUrl),
+        Uri.parse("${ApiEndPoints.commonWebUrl}Login"),
         body: body,
       );
 

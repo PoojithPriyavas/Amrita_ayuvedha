@@ -18,6 +18,7 @@ class ScreenSignIn extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
     final signInProvider = Provider.of<SignInProvider>(context);
     final SignInService signInService = SignInService();
+    // final PatientService patientService = PatientService();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -87,23 +88,26 @@ class ScreenSignIn extends StatelessWidget {
                         style: t17White600,
                         callbackAction: () async {
                           await signInProvider.loginpressed();
-                          if (signInProvider.email.isEmpty) {
-                            ScaffoldMessenger.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(buildDynamicSnackBar(
-                                title: signInProvider.title1,
-                                message: signInProvider.message1,
-                              ));
-                          }
-                          if (signInProvider.password.isEmpty) {
-                            ScaffoldMessenger.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(buildDynamicSnackBar(
-                                title: signInProvider.title1,
-                                message: signInProvider.message1,
-                              ));
-                          }
+                          // if (signInProvider.email.isEmpty) {
+                          //   ScaffoldMessenger.of(context)
+                          //     ..hideCurrentSnackBar()
+                          //     ..showSnackBar(buildDynamicSnackBar(
+                          //       title: signInProvider.title1,
+                          //       message: signInProvider.message1,
+                          //     ));
+                          // }
+                          // if (signInProvider.password.isEmpty) {
+                          //   ScaffoldMessenger.of(context)
+                          //     ..hideCurrentSnackBar()
+                          //     ..showSnackBar(buildDynamicSnackBar(
+                          //       title: signInProvider.title1,
+                          //       message: signInProvider.message1,
+                          //     ));
+                          // }
                           await signInService.login(signInProvider, context);
+
+                          // await PatientService.fetchPatients(
+                          //     ApiEndPoints.token);
                         },
                         label: "Login",
                       ),
@@ -124,9 +128,7 @@ class ScreenSignIn extends StatelessWidget {
                                   text: 'Privacy Policy.', style: t12Blue300),
                             ],
                           )),
-                      SizedBox(
-                        height: 70,
-                      )
+                      kHieght70
                     ],
                   ),
                 ),

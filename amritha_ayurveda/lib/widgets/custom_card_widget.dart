@@ -2,9 +2,21 @@ import 'package:amritha_ayurveda/core/colors.dart';
 import 'package:amritha_ayurveda/core/constants.dart';
 import 'package:amritha_ayurveda/core/text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomCardWidget extends StatelessWidget {
+  final String name;
+  final String treatmentName;
+  final DateTime date;
+  final String user;
+  final int id;
+
   const CustomCardWidget({
+    required this.id,
+    required this.name,
+    required this.user,
+    required this.date,
+    required this.treatmentName,
     super.key,
     required this.deviceWidth,
   });
@@ -13,6 +25,9 @@ class CustomCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = date;
+    final formattedDate = DateFormat('dd/MM/yyyy').format(dateTime);
+
     return Column(
       children: [
         Text(""),
@@ -26,8 +41,7 @@ class CustomCardWidget extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -35,32 +49,29 @@ class CustomCardWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "1.",
+                          "$id.",
                           style: t18Black500,
                         ),
                         kWidth10,
                         Text(
-                          "Vikram",
+                          name,
                           style: t18Black500,
                         )
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, top: 5),
+                      padding: const EdgeInsets.only(left: 20, top: 5),
                       child: Text(
-                        "Couple Combo Package( rejuvanating sfgjsdhgfdsgjfhg)",
+                        treatmentName,
                         style: t16Primary300,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, top: 15),
+                      padding: const EdgeInsets.only(left: 20, top: 15),
                       child: Row(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Row(
                             children: [
@@ -71,15 +82,14 @@ class CustomCardWidget extends StatelessWidget {
                               ),
                               kWidth5,
                               Text(
-                                "31/02/3023",
+                                formattedDate,
                                 style: t15Black400,
                               )
                             ],
                           ),
                           kWidth20,
                           Row(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               const Icon(
                                 Icons.people_outline,
@@ -88,7 +98,7 @@ class CustomCardWidget extends StatelessWidget {
                               ),
                               kWidth5,
                               Text(
-                                "Name ",
+                                user,
                                 style: t15Black400,
                               )
                             ],
@@ -101,18 +111,16 @@ class CustomCardWidget extends StatelessWidget {
               ),
               const Divider(),
               Padding(
-                padding:
-                    const EdgeInsets.only(left: 35, right: 20),
+                padding: const EdgeInsets.only(left: 35, right: 20),
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "View Booking Details",
                       style: t16Black300,
                     ),
-                   const  Icon(
+                    const Icon(
                       Icons.chevron_right_sharp,
                       color: secondaryColor,
                       size: 28,

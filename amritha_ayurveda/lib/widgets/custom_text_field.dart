@@ -21,6 +21,7 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.5)),
         child: TextField(
           controller: controller,
+          maxLines: 1,
           decoration: InputDecoration(
             hintText: label,
             hintStyle: t14Black300Inter,

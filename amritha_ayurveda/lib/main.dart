@@ -1,5 +1,6 @@
 import 'package:amritha_ayurveda/presentation/screen_signin.dart';
 import 'package:amritha_ayurveda/provider/login_provider.dart';
+import 'package:amritha_ayurveda/provider/register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => SignInProvider()),
+    ChangeNotifierProvider(create: (context) => RegisterProvider()),
   ], child: const MyApp()));
 }
 

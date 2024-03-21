@@ -1,5 +1,4 @@
 import 'package:amritha_ayurveda/core/colors.dart';
-import 'package:amritha_ayurveda/core/text.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
@@ -19,14 +18,12 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(context).size.width;
     return SizedBox(
         height: height,
         width: width,
         child: ElevatedButton(
-          
           style: ButtonStyle(
-            padding: MaterialStatePropertyAll(EdgeInsets.zero ),
+              padding: const MaterialStatePropertyAll(EdgeInsets.zero),
               shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
                   borderRadius: BorderRadius.circular(15))),
               backgroundColor: const MaterialStatePropertyAll(primaryColor),

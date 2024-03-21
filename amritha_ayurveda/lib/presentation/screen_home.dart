@@ -1,12 +1,18 @@
+import 'package:amritha_ayurveda/core/api_end_points.dart';
 import 'package:amritha_ayurveda/core/constants.dart';
 import 'package:amritha_ayurveda/core/text.dart';
+import 'package:amritha_ayurveda/model/patient_model/patient.dart';
 import 'package:amritha_ayurveda/presentation/screen_register.dart';
+import 'package:amritha_ayurveda/provider/login_provider.dart';
+import 'package:amritha_ayurveda/provider/register_provider.dart';
+import 'package:amritha_ayurveda/services/patient_list_service.dart';
 import 'package:amritha_ayurveda/widgets/custom_card_widget.dart';
 import 'package:amritha_ayurveda/widgets/custom_date_picker_button.dart';
 import 'package:amritha_ayurveda/widgets/custom_elevated_button.dart';
 import 'package:amritha_ayurveda/widgets/custom_searchbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -15,6 +21,9 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
+    final registerProvider = Provider.of<RegisterProvider>(context);
+    final signInProvider = Provider.of<SignInProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -61,20 +70,50 @@ class ScreenHome extends StatelessWidget {
               ),
               const Divider(),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return CustomCardWidget(deviceWidth: deviceWidth);
-                  },
-                ),
+                child: FutureBuilder<List<Patient>>(
+                    future: PatientService.fetchPatients(ApiEndPoints.token),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final patient = snapshot.data![index];
+
+                            return CustomCardWidget(
+                              id: patient.id!,
+                              deviceWidth: deviceWidth,
+                              date: patient.createdAt!,
+                              name: patient.name!,
+                              treatmentName:
+                                  patient.patientdetailsSet!.isNotEmpty
+                                      ? patient.patientdetailsSet![0]
+                                                  .treatmentName ==
+                                              null
+                                          ? "ok"
+                                          : patient.patientdetailsSet![0]
+                                              .treatmentName!
+                                      : "No treatment available",
+                              user: patient.user!,
+                            );
+                          },
+                        );
+                      } else {
+                        return Text("No list available ");
+                      }
+                    }),
               ),
               CustomElevatedButton(
                   style: t17White600,
                   height: 50,
                   width: deviceWidth - 30,
-                  callbackAction: () {
+                  callbackAction: () async {
+                    await registerProvider.registerNow(signInProvider);
                     Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => ScreenRegister(),
+                      builder: (context) => const ScreenRegister(),
                     ));
                   },
                   label: "Register Now "),
