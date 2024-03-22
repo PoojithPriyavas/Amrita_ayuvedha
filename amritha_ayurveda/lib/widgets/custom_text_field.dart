@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
+  final bool password;
 
-  const CustomTextField({
+  CustomTextField({
     required this.controller,
     required this.label,
+    required this.password,
     super.key,
   });
 
@@ -21,6 +23,7 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.5)),
         child: TextField(
           controller: controller,
+          obscureText: password,
           maxLines: 1,
           decoration: InputDecoration(
             hintText: label,

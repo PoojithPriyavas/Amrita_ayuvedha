@@ -19,8 +19,10 @@ class BranchService {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       final List<dynamic> branchList = jsonResponse['branches'];
       final data = branchList.map((json) => Patient.fromJson(json)).toList();
-      print("data is $data");
+      // print("data is $data");
       registerProvider.setBranches(data.map((branch) => branch.name!).toList());
+      registerProvider
+          .setBranchesId(data.map((branch) => branch.id!.toString()).toList());
 
       return data;
     } else {

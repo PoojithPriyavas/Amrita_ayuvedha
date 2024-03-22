@@ -1,4 +1,3 @@
-import 'package:amritha_ayurveda/core/api_end_points.dart';
 import 'package:amritha_ayurveda/core/constants.dart';
 import 'package:amritha_ayurveda/core/text.dart';
 import 'package:amritha_ayurveda/model/patient_model/patient.dart';
@@ -71,7 +70,7 @@ class ScreenHome extends StatelessWidget {
               const Divider(),
               Expanded(
                 child: FutureBuilder<List<Patient>>(
-                    future: PatientService.fetchPatients(ApiEndPoints.token),
+                    future: PatientService.fetchPatients(signInProvider.token),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
@@ -102,7 +101,7 @@ class ScreenHome extends StatelessWidget {
                           },
                         );
                       } else {
-                        return Text("No list available ");
+                        return const Text("No list available ");
                       }
                     }),
               ),

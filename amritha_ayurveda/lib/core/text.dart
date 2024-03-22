@@ -74,3 +74,20 @@ TextStyle get t14DBlack300Inter {
   return GoogleFonts.inter(
       fontSize: 14, fontWeight: FontWeight.w300, color: Colors.black);
 }
+
+// ----------manroppe--------
+
+TextStyle get t10Black600Manrope {
+  return GoogleFonts.manrope(
+      fontSize: 10, fontWeight: FontWeight.w600, color: Colors.black);
+}
+
+TextStyle get t10Black500Manrope {
+  return GoogleFonts.manrope(
+      fontSize: 10, fontWeight: FontWeight.w500, color: Colors.black);
+}
+
+TextStyle get t10Grey600Manrope {
+  return GoogleFonts.manrope(
+      fontSize: 10, fontWeight: FontWeight.w600, color: Colors.grey);
+}

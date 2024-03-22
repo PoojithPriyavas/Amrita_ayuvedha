@@ -20,7 +20,6 @@ class PopUpScreen extends StatelessWidget {
       surfaceTintColor: Colors.white,
       content: SizedBox(
         height: 380,
-        width: deviceWidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,15 +35,16 @@ class PopUpScreen extends StatelessWidget {
             ),
             kHieght10,
             SizedBox(
-              width: deviceWidth - 60,
+              height: 80,
               child: DropdownButtonHideUnderline(
                   child: DropdownButtonFormField2<String>(
                 style: t14Black300Inter,
                 decoration: const InputDecoration(
+                    alignLabelWithHint: true,
                     contentPadding: EdgeInsets.all(0),
                     errorStyle: TextStyle(color: Colors.white),
                     filled: true,
-                    isDense: false,
+                    isDense: true,
                     border: InputBorder.none,
                     fillColor: Colors.white),
                 hint: Text(
@@ -60,7 +60,7 @@ class PopUpScreen extends StatelessWidget {
                 }).toList(),
                 buttonStyleData: ButtonStyleData(
                   height: 50,
-                  width: (deviceWidth - 200),
+                  width: 100,
                   padding: const EdgeInsets.only(left: 14, right: 14),
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
@@ -91,8 +91,8 @@ class PopUpScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 14, right: 14),
                 ),
                 value: registerProvider.selectedTreatment,
-                onChanged: (String? newValue) {
-                  registerProvider.treatmentSelected(newValue!);
+                onChanged: (String? newValue) async {
+                  registerProvider.selectedTreatment = newValue;
                 },
               )),
             ),
@@ -270,6 +270,14 @@ class PopUpScreen extends StatelessWidget {
                 height: 50,
                 width: deviceWidth - 60,
                 callbackAction: () async {
+                  final String? newValue = registerProvider.selectedTreatment;
+
+                  if (newValue != null) {
+                    int index =
+                        registerProvider.treatmentList.indexOf(newValue);
+                    await registerProvider.treatmentSelected(newValue, index);
+                  }
+
                   registerProvider.saveTreatmentDetails();
                   Navigator.of(context).pop();
                 },

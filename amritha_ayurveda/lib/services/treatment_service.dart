@@ -12,8 +12,7 @@ class TreatmentService {
     const url = '${ApiEndPoints.commonWebUrl}TreatmentList';
     final response = await http.get(
       Uri.parse(url),
-      // headers: {'Authorization': 'Bearer $token'},
-      headers: {'Authorization': 'Bearer ${ApiEndPoints.token}'},
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response.statusCode == 200) {
@@ -22,8 +21,8 @@ class TreatmentService {
       final data = jsonList.map((json) => Patient.fromJson(json)).toList();
       registerProvider
           .setTreatments(data.map((treatment) => treatment.name!).toList());
-
-      print(data);
+      registerProvider.setTreatentId(
+          data.map((treatment) => treatment.id!.toString()).toList());
       return data;
     } else {
       throw Exception('Failed to load patients');

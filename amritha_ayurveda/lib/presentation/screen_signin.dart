@@ -4,7 +4,6 @@ import 'package:amritha_ayurveda/core/text.dart';
 import 'package:amritha_ayurveda/provider/login_provider.dart';
 import 'package:amritha_ayurveda/services/signin_service.dart';
 import 'package:amritha_ayurveda/widgets/custom_elevated_button.dart';
-import 'package:amritha_ayurveda/widgets/custom_snackbar.dart';
 import 'package:amritha_ayurveda/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,6 @@ class ScreenSignIn extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
     final signInProvider = Provider.of<SignInProvider>(context);
     final SignInService signInService = SignInService();
-    // final PatientService patientService = PatientService();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -60,6 +58,7 @@ class ScreenSignIn extends StatelessWidget {
                         child: CustomTextField(
                       label: "Enter your Email",
                       controller: signInProvider.emailController,
+                      password: false,
                     )),
                     kHieght20,
                     Text(
@@ -71,6 +70,7 @@ class ScreenSignIn extends StatelessWidget {
                         child: CustomTextField(
                       label: "Enter Password",
                       controller: signInProvider.passwordController,
+                      password: true,
                     )),
                   ],
                 ),
@@ -88,26 +88,7 @@ class ScreenSignIn extends StatelessWidget {
                         style: t17White600,
                         callbackAction: () async {
                           await signInProvider.loginpressed();
-                          // if (signInProvider.email.isEmpty) {
-                          //   ScaffoldMessenger.of(context)
-                          //     ..hideCurrentSnackBar()
-                          //     ..showSnackBar(buildDynamicSnackBar(
-                          //       title: signInProvider.title1,
-                          //       message: signInProvider.message1,
-                          //     ));
-                          // }
-                          // if (signInProvider.password.isEmpty) {
-                          //   ScaffoldMessenger.of(context)
-                          //     ..hideCurrentSnackBar()
-                          //     ..showSnackBar(buildDynamicSnackBar(
-                          //       title: signInProvider.title1,
-                          //       message: signInProvider.message1,
-                          //     ));
-                          // }
                           await signInService.login(signInProvider, context);
-
-                          // await PatientService.fetchPatients(
-                          //     ApiEndPoints.token);
                         },
                         label: "Login",
                       ),

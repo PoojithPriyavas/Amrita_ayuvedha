@@ -11,7 +11,7 @@ class PatientService {
     final response = await http.get(
       Uri.parse(url),
       // headers: {'Authorization': 'Bearer $token'},
-      headers: {'Authorization': 'Bearer ${ApiEndPoints.token}'},
+      headers: {'Authorization': 'Bearer ${token}'},
     );
 
     if (response.statusCode == 200) {
