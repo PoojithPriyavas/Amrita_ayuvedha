@@ -69,7 +69,6 @@ class ScreenRegister extends StatelessWidget {
                                         Center(
                                             child: CustomTextField(
                                                 label: "Enter your Full Name",
-                                                password: false,
                                                 controller: registerProvider
                                                     .nameController)),
                                         kHieght20,
@@ -80,7 +79,6 @@ class ScreenRegister extends StatelessWidget {
                                             child: CustomTextField(
                                                 label:
                                                     "Enter your Whatsapp Number",
-                                                password: false,
                                                 controller: registerProvider
                                                     .whatappNumberController)),
                                         kHieght20,
@@ -90,7 +88,6 @@ class ScreenRegister extends StatelessWidget {
                                             child: CustomTextField(
                                                 label:
                                                     "Enter your full address",
-                                                password: false,
                                                 controller: registerProvider
                                                     .addressController)),
                                         kHieght20,
@@ -368,7 +365,6 @@ class ScreenRegister extends StatelessWidget {
                                         Center(
                                             child: CustomTextField(
                                                 label: "",
-                                                password: false,
                                                 controller: registerProvider
                                                     .totalAmountController)),
                                         kHieght20,
@@ -378,7 +374,6 @@ class ScreenRegister extends StatelessWidget {
                                         Center(
                                             child: CustomTextField(
                                                 label: " ",
-                                                password: false,
                                                 controller: registerProvider
                                                     .discountAmountController)),
                                         kHieght20,
@@ -392,7 +387,6 @@ class ScreenRegister extends StatelessWidget {
                                         Center(
                                             child: CustomTextField(
                                                 label: "",
-                                                password: false,
                                                 controller: registerProvider
                                                     .advanceAmountController)),
                                         kHieght20,
@@ -402,7 +396,6 @@ class ScreenRegister extends StatelessWidget {
                                         Center(
                                             child: CustomTextField(
                                                 label: "",
-                                                password: false,
                                                 controller: registerProvider
                                                     .balanceAmountController)),
                                         kHieght20,

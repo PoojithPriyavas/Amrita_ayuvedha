@@ -9,12 +9,12 @@ class SignInService {
   Future<void> login(
       SignInProvider signInProvider, BuildContext context) async {
     print("button clicked");
-    print("username is ${signInProvider.email}");
-    print("password is ${signInProvider.password}");
+    // print("username is ${signInProvider.email}");
+    // print("password is ${signInProvider.password}");
 
     Map<String, String> body = {
-      'username': signInProvider.email,
-      'password': signInProvider.password
+      'username': signInProvider.emailController.text,
+      'password': signInProvider.passwordController.text
     };
 
     try {

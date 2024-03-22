@@ -58,7 +58,6 @@ class ScreenSignIn extends StatelessWidget {
                         child: CustomTextField(
                       label: "Enter your Email",
                       controller: signInProvider.emailController,
-                      password: false,
                     )),
                     kHieght20,
                     Text(
@@ -70,7 +69,6 @@ class ScreenSignIn extends StatelessWidget {
                         child: CustomTextField(
                       label: "Enter Password",
                       controller: signInProvider.passwordController,
-                      password: true,
                     )),
                   ],
                 ),
@@ -87,8 +85,7 @@ class ScreenSignIn extends StatelessWidget {
                         height: 50,
                         style: t17White600,
                         callbackAction: () async {
-                          await signInProvider.loginpressed();
-                          await signInService.login(signInProvider, context);
+                          await signInProvider.loginpressed(context);
                         },
                         label: "Login",
                       ),

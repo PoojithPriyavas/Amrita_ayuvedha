@@ -1,6 +1,6 @@
 import 'package:amritha_ayurveda/presentation/screen_home.dart';
+import 'package:amritha_ayurveda/services/signin_service.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class SignInProvider extends ChangeNotifier {
   String _email = '';
@@ -15,10 +15,10 @@ class SignInProvider extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  loginpressed() {
-    _email = emailController.text;
-    _password = passwordController.text;
-    notifyListeners();
+  loginpressed(BuildContext context) async {
+    final signInInservice = SignInService();
+
+    await signInInservice.login(this, context);
   }
 
   void setToken(String token, BuildContext context) {

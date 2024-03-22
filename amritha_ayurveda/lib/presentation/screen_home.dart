@@ -23,6 +23,10 @@ class ScreenHome extends StatelessWidget {
     final registerProvider = Provider.of<RegisterProvider>(context);
     final signInProvider = Provider.of<SignInProvider>(context);
 
+    Future<void> _refreshPatients() async {
+      await PatientService.fetchPatients(signInProvider.token);
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -69,41 +73,48 @@ class ScreenHome extends StatelessWidget {
               ),
               const Divider(),
               Expanded(
-                child: FutureBuilder<List<Patient>>(
-                    future: PatientService.fetchPatients(signInProvider.token),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (snapshot.hasData) {
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            final patient = snapshot.data![index];
+                child: RefreshIndicator(
+                  onRefresh: _refreshPatients,
+                  child: FutureBuilder<List<Patient>>(
+                      future:
+                          PatientService.fetchPatients(signInProvider.token),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              final patient = snapshot.data![index];
 
-                            return CustomCardWidget(
-                              id: patient.id!,
-                              deviceWidth: deviceWidth,
-                              date: patient.createdAt!,
-                              name: patient.name!,
-                              treatmentName:
-                                  patient.patientdetailsSet!.isNotEmpty
-                                      ? patient.patientdetailsSet![0]
-                                                  .treatmentName ==
-                                              null
-                                          ? "ok"
-                                          : patient.patientdetailsSet![0]
-                                              .treatmentName!
-                                      : "No treatment available",
-                              user: patient.user!,
-                            );
-                          },
-                        );
-                      } else {
-                        return const Text("No list available ");
-                      }
-                    }),
+                              return CustomCardWidget(
+                                id: patient.id!,
+                                deviceWidth: deviceWidth,
+                                date: patient.createdAt!,
+                                name: patient.name!,
+                                treatmentName:
+                                    patient.patientdetailsSet!.isNotEmpty
+                                        ? patient.patientdetailsSet![0]
+                                                    .treatmentName ==
+                                                null
+                                            ? "ok"
+                                            : patient.patientdetailsSet![0]
+                                                .treatmentName!
+                                        : "No treatment available",
+                                user: patient.user!,
+                              );
+                            },
+                          );
+                        } else {
+                          return const Text("No list available ");
+                        }
+                      }),
+                ),
               ),
               CustomElevatedButton(
                   style: t17White600,
